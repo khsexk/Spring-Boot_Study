@@ -66,11 +66,57 @@
 > ## II. DAO의 분리 
 </br>
 
+✎ **리팩토링**: 기존의 코드를 외부의 동작방식에는 변화 없이 내부 구조를 변경해서 재구성하는 작업 또는 기술  
+✎ **디자인 패턴**: 소프트웨어 설계 시 특정 상황에서 자주 만나는 문제를 해결하기 위해 사용할 수 있는 재사용 가능한 솔루션  
+✎ **템플릿 메서드 패턴**(Template Method Pattern): 슈퍼클래스에 기본적인 로직의 흐름을 만들고, 그 기능의 일부를 추상 메서드나 오버라이딩이 가능한 protected 메서드 등으로 만든 뒤 서브클래스에서 이런 메서드를 필용 맞게 구현해서 사용하도록 하는 디자인 패턴  
+✎ **팩토리 메서드 패턴**(Factory Method Pattern): 서브클래스에서 구체적인 오브젝트 생성 방법을 결정하게 하는 것  
+
 ### 관심사의 분리
 
 - 객체 지향에서의 오브젝트에 대한 설계와 이를 구현한 코드는 끊임없이 변함
   - 사용자의 비즈니스 프로세스와 그에 따른 요구사항의 변화
   - 애플리케이션이 더 이상 사용되지 않으면 변화 중지
+- 따라서 미래의 변화를 대비하여 객체를 설계해야 함
+  - 변화에 어떻게 대비할 것인가
+  - 분리와 확장을 고려한 설계
+
+### getConnection 추출
+
+- UserDao의 관심사항
+  - DB와 연결을 위한 Connection을 어떻게 가져올까
+  - DB에 보낼 SQL 문장을 담은 Statement를 만들고 실행
+  - DB 관련 오브젝트를 닫아 공유 리소스를 시스템에 돌려주는 것
+
+- 중복 코드의 메서드 추출
+  - 아래와 같은 작업을 리팩토링이라고 함
+```java
+private Connection getConnection() throws ClassNotFoundException, SQLException {
+  Class.forName("com.mysql.jdbc.Driver");
+  Connection c = DriverManager.getConnection("jdbc:mysql://localhost/springbook", "id", "passwd");
+  return c;
+}
+```
+### DB 커넥션 만들기의 독립
+- UserDao class 바이너리 파일을 타 회사들에게 제공하기 위한 방법
+  - 상속을 통한 확장: getConnection()을 추상 메서드로 제공
+
+
+- 템플릿 메서드 패턴 (스프링에서 애용하는 디자인 패턴임) 
+<img width="458" alt="상속을 통한 UserDao 확장 방법" src="https://user-images.githubusercontent.com/56003992/150070278-4835a885-fca2-4f36-83e6-720692e9e964.png">
+
+- 팩토리 메서드 패턴
+<img width="508" alt="UserDao에 적용된 메서드 패턴" src="https://user-images.githubusercontent.com/56003992/150070857-497eb070-5464-4032-b135-4a836e12ba94.png">
 
 * * *
+</br>  
+
+> ⭐︎
+> ## III. DAO의 확장 
+</br>
+
+✎ **d**:   
+
+### 클래스의 분리
+
+- ㅇ
 </br>  
