@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import springbook.user.domain.User;
 
 public class UserDao {
-	String jdbc_drjver = "com.mysql.jdbc.Driver";
+	String jdbc_drjver = "com.mysql.cj.jdbc.Driver";
 	String jdbc_url = "jdbc:mysql://localhost/springbook?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC";
 	
 	public void add(User user) throws ClassNotFoundException, SQLException {
