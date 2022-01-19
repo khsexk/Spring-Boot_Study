@@ -114,9 +114,49 @@ private Connection getConnection() throws ClassNotFoundException, SQLException {
 > ## III. DAO의 확장 
 </br>
 
-✎ **d**:   
+✎ **추상화**: 어떤 것들의 공통적인 성격을 뽑아내어 이를 따로 분리해내는 작업    
+
+### 변화의 성격
+
+- JDBC API를 사용할 것인지, DB 전용 API를 사용할 것인지
+- 어떤 테이블 이름과 필드 이름을 사용해 어떤 SQL을 만들 것인지
+- etc
+- 하지만 상속은 사실 여러가지 단점을 가지고 있어 변화를 따라가기 힘듦
 
 ### 클래스의 분리
 
-- ㅇ
+- 관심사가 다르고 변화의 성격 또한 다를 때
+  - SimpleConnectionMaker 객체를 생성
+  - 객체의 메서드로 connection 연결
+<img width="454" alt="두 개의 독립된 클래스로 분리한 결과" src="https://user-images.githubusercontent.com/56003992/150083559-dd1b59b4-a6f2-45ad-a7e1-1115c2bcb81b.png">
+
+- 이식성이 높아짐
+- But. UserDao가 SimpleConnectionMaker라는 특정 클래스에 종속돼 버림
+  - 해결해야 할 문제
+    - SimpleConnectionMaker의 메서드의 다르게 하면 결국 UserDao 코드를 변경해야 함
+    - DB 커넥션을 제공하는 클래스가 어떤 것인지 UserDao가 구체적으로 알고 있어야 함 (이후 변경되면 자유로운 확장이 힘들어짐)
+
+### 인터페이스 도입
+
+```java
+public class DConnectionMaker implements ConnectionMaker {
+  ...
+  public Connection makeConnection() throws ClassNotFoundException, SQLException {
+    // D 사의 독자적인 방법으로 Connection 생성 코드
+  }
+}
+```
+- 인터페이스(interface)를 통해 클래스 분리
+- But. 여전히 UserDao의 생성자에서는 분리가 안됨
+
+### 관계 설정 책임의 분리
+
+
+* * *
 </br>  
+
+> ⭐︎
+> ## IV. 제어의 역전 (IoC)
+</br>
+
+✎ **IoC**: Inversion of Control   
