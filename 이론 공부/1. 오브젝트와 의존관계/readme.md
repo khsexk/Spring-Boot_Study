@@ -204,13 +204,31 @@ public class UserDaoTest {
 - **전략 패턴**(Strategy Pattern)
   - 자신의 기능 맥락(context)에서 필요에 따라 변경이 필요한 알고리즘을 interface를 통해 통째로 외부로 분리시키고, 이를 구현한 구체적인 알고리즘 클래스를 필요에 따라 바꿔서 사용할 수 있게 하는 디자인 패턴
 
-**Spring이란 객체지향적 설계 원칙과 디자인 패턴에 나타난 장점을 자연스럽게 개발자들이 활용할 수 있게 해주는 Framework**
+☛ **Spring이란 객체지향적 설계 원칙과 디자인 패턴에 나타난 장점을 자연스럽게 개발자들이 활용할 수 있게 해주는 Framework**
 
 * * *
 </br>  
 
 > ⭐︎
 > ## IV. 제어의 역전 (IoC)
+</br>
+
+✎ **IoC**: Inversion of Control   
+
+* * *
+</br>  
+
+> ⭐︎
+> ## V. 
+</br>
+
+✎ **IoC**: Inversion of Control   
+
+* * *
+</br>  
+
+> ⭐︎
+> ## VI. 
 </br>
 
 ✎ **IoC**: Inversion of Control   
