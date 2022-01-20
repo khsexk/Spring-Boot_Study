@@ -213,13 +213,52 @@ public class UserDaoTest {
 > ## IV. 제어의 역전 (IoC)
 </br>
 
-✎ **IoC**: Inversion of Control   
+✎ **IoC**: Inversion of Control  
+✎ **팩토리**(factory): 객체의 생성 방법을 결정하고 그렇게 만들어진 오브젝트를 돌려주는 역할을 하는 클래스  
+
+
+### 오브젝트 팩토리
+
+- 위에서는 UserDaoTest가 어떤 ConnectionMaker 구현 클래스를 사용할지 결정했음
+- But. 사실 UserDaoTest는 UserDao의 기능이 잘 작동하는지 테스트하기 위해 만든 것 ➣ 분리 필요 ➣ 팩토리 생성
+```java
+public class DaoFactory {
+  public ConnectionMaker connectionMaker(){
+    return new DConnectionMaker();
+  }
+  public UserDao userDao() {
+    return new UserDao(connectionMaker());
+  }
+}
+```
+  
+- 오브젝트 팩토리를 활용한 구조
+  - 데이터 로직 및 기술 로직: UserDao, ConnectionMaker
+  - 관계 정의: DaoFactory
+<img width="501" alt="오브젝트 팩토리를 활용한 구조" src="https://user-images.githubusercontent.com/56003992/150377754-c579eb79-c521-4a8c-8a7f-2d4876bdc0f2.png">
+
+☛ **핵심: 컴포넌트 역할 Object와 구조 결정 Object 분리**
+☛ **여러 Dao가 있어도 오브젝트 팩토리를 활용하여 손쉽게 수정 가능**
+
+### 제어권의 이전을 통한 제어관계 역전 
+
+- 일반적인 흐름
+  - 프로그램이 시작되는 지점에서 다음에 사용할 오브젝트 결정 및 생성, 메서드 호출
+- 제어의 역전
+  - 프로그램의 제어 흐름 구조가 뒤바뀌는 것
+  - 오브젝트가 자신이 사용할 오브젝트를 스스로 생성 및 선택하지 않음
+  - 모든 제어 권한을 자신이 아닌 다른 대상에 위임
+    - ex i) 서블릿: 제어는 서블릿 컨테이너. 로직은 서블릿 클래스 코드
+    - ex ii) 템플릿 메서드 패턴: 제어는 상위 템플릿 메서드. 로직은 서브클래스의 메서드
+    - ex iii) 프레임워크
+
+☛ **스프링은 Ioc를 모든 기능으 기초가 되는 기반기술로 삼고 있고, 극한까지 적용하는 프레임워크**
 
 * * *
 </br>  
 
 > ⭐︎
-> ## V. 
+> ## V. 스프링의 IoC
 </br>
 
 ✎ **IoC**: Inversion of Control   
@@ -228,7 +267,28 @@ public class UserDaoTest {
 </br>  
 
 > ⭐︎
-> ## VI. 
+> ## VI. 싱글톤 레지스트리와 오브젝트 스코프
 </br>
 
 ✎ **IoC**: Inversion of Control   
+
+* * *
+</br>  
+
+> ⭐︎
+> ## VII. 의존관계 주입 (DI)
+</br>
+
+✎ **IoC**: Inversion of Control   
+
+* * *
+</br>  
+
+> ⭐︎
+> ## VIII. XML을 이용한 설정
+</br>
+
+✎ **IoC**: Inversion of Control   
+
+* * *
+</br>  
