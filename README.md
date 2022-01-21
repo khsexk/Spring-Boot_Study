@@ -29,13 +29,7 @@
   - Date
     - 22.01.16
 - 1장. 오브젝트와 의존관계
-  - 1.1 초난감 DAO
-    - Key: 
-    - Page: 
-    - Date:  
-  - 1.2 DAO의 분리
-  - 1.3 DAO의 확장
-  - 1.4 제어의 역전 (IoC) 
+  - 1.1 ~ 1.4 ➤ 1장 Part1
 - 2장. 테스트
   - 2.1 USERDAOTEST 다시 보기
   - 2.2 USERDAOTEST 개선
