@@ -85,10 +85,10 @@ AbstractApplicationContext factory = new GenericXmlApplicationContext("applicati
 #### 스프링 컨테이너 동작 순서
 <img src="https://user-images.githubusercontent.com/56003992/150781032-4e21c0e3-cd76-49e0-b203-f6da3c80dd6a.jpeg" width="512" height="256">
 
-1️⃣ TVUser 클라이언트가 스프링 설정 파일을 로딩하여 컨테이너 구동
-2️⃣ 스프링 설정 파일에 <bean> 등록된 SamsungTV 객체 생성
-3️⃣ getBean() 메서드로 이름이 'tv'인 객체 요청(lookup)
-4️⃣ SamsungTV 객체 반환
+1️⃣ TVUser 클라이언트가 스프링 설정 파일을 로딩하여 컨테이너 구동  
+2️⃣ 스프링 설정 파일에 <bean> 등록된 SamsungTV 객체 생성  
+3️⃣ getBean() 메서드로 이름이 'tv'인 객체 요청(lookup)  
+4️⃣ SamsungTV 객체 반환  
 ☛ 티비의 종류를 바꿀 때 applicationContext.xml 파일만 수정하면 됨
   
 #### 스프링 컨테이너 종류
