@@ -72,3 +72,41 @@
 
 # Class 03. 스프링 컨테이너 및 설정 파일
 
+### 3.1 스프링 IoC 시작하기
+
+- applicationContext.xml 만들기
+  - 프로젝트의 "src/main/resources " → [New] → [Other] → "Spring Bean Configuration File in Spring 디렉터리" 선택
+  - applicationContext.xml에 <bean id="tv" class="polymorphism.SamsungTV"/> 추가
+```java
+BeanFactory factory = new BeanFactory();  // 팩토리 클래스를 통해 팩토리 객체 생성 
+AbstractApplicationContext factory = new GenericXmlApplicationContext("applicationContext.xml");  // 스프링 컨테이너를 구동하여 팩토리 객체 생성
+```
+
+#### 스프링 컨테이너 동작 순서
+1️⃣ TVUser 클라이언트가 스프링 설정 파일을 로딩하여 컨테이너 구동
+2️⃣ 스프링 설정 파일에 <bean> 등록된 SamsungTV 객체 생성
+3️⃣ getBean() 메서드로 이름이 'tv'인 객체 요청(lookup)
+4️⃣ SamsungTV 객체 반환
+☛ 티비의 종류를 바꿀 때 applicationContext.xml 파일만 수정하면 됨
+  
+#### 스프링 컨테이너 종류
+☛ 스프링에서는 BeanFactory와 이를 상속한 ApplicationContext 두 가지 유형의 컨테이너 제공
+
+- BeanFactory
+  - 스프링 설정 파일에 등록된 <bean> 객체를 생성 및 관리하는, 가장 기본적인 기능만 제공
+  - 지연 로딩 방식 사용 (객체 생성 시점이 컨테이너 구동 시점이 아닌 client 요청 시점)
+  - 일반적인 스프링 프로젝트에서 사용 안함
+  
+- ApplicationContext
+  - <bean> 객체 관리 기능 외 트랜잭션 관리, 메시지 기반의 다국어 처리 등 다양한 기능 제공
+  - 즉시 로딩 방식 사용(컨테이너 구동 시점에 <bean>에 등록된 클래스 생성)
+  - Web Application 개발 지원
+|구현 클래스|기능|
+|--------|---|
+|GenericXmlApplicationContext| 파일 시스템이나 클래스 경로에 있는 XML 설정 파일을 로딩하여 구동하는 컨테이너|
+|XmlWebApplicationContext|웹 기반의 스프링 애플리케이션을 개발할 때 사용하는 컨테이너|
+
+### 3.2 스프링 XML 설정
+  
+
+  
