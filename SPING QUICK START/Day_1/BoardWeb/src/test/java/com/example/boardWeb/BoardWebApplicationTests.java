@@ -1,0 +1,13 @@
+package com.example.boardWeb;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class BoardWebApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
