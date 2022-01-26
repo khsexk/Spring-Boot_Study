@@ -287,7 +287,14 @@ private Speaker speaker
 * * *
   
 # Class 06. 비즈니스 컴포넌트 실습 1
+  
+☛ 프로젝트에서 사용하는 구조로 Business Component를 구현한 후, 스프링의 Dpendency Lookup과 Dependency Injection을 점검하는 챕터
+  
+### 6.1 BoardService 컴포넌트 구조
+<img src="https://user-images.githubusercontent.com/56003992/151112968-84e6e6f5-a8b0-449e-b79a-1a498913387f.jpeg" width=512 height=220>
+  
 
+  
 * * *
   
 # Class 07. 비즈니스 컴포넌트 실습 2
