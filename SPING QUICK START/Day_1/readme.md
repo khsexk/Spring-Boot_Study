@@ -213,6 +213,76 @@ p:변수명="설정할 값"
 * * *
   
 # Class 05. 어노테이션 기반 설정
+
+### 5.1 어노테이션 설정 기초
+
+☛ 어노테이션 설정을 추가하려면 스프링 설정 파일의 &lt;beans&gt;에 Context 관련 네임스페이스와 스키마 문서의 위치를 등록해야 함  
+☛ [Namespaces] 탭으로 추가하거나 &lt;beans&gt; 안에 밑의 코드 작성  
+```
+xmls:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation에 "http://www.springframework.org/schema/context"와 "http://www.springframework.org/schema/context/spring-context-4.2.xsd" 추가
+```
+  
+#### component-scan 설정
+: application에서 사용할 객체들을 &lt;bean&gt; 등록하지 않고 자동으로 생성하기 위해 정의하는 엘리먼트  
+```
+<context:component-scan base-package="패키지_이름"></context:component-scan>
+```
+  
+#### @Component
+☛ 클래스 선언부 위에 어노테이션 설정  
+☛ XML에서 &lt;bean&gt;으로 설정하든, 어노테이션을 사용하든 그 클래스에 기본 생성자가 있어야 함  
+☛ client가 스프링 컨테이너가 생성한 객체를 요청하려면 id를 꼭 설정해줘야 함  
+```java
+//XML
+<bean id="tv" class="polymorphism.LgTV"></bean>
+
+// Annotation
+@Component("tv")
+```
+
+### 5.2 의존성 주입 설정 
+
+#### 의존성 주입 어노테이션
+|Annotation|Explanation|
+|----------|-----------|
+|@Autowired|주로 변수 위에 설정하여 해당 타입의 객체를 찾아 자동으로 할당 </br> org.springframework.beans.factory.annotation.Autowired|
+|@Qualifier|특정 객체의 이름을 이용하여 의존성 주입할 때 사용 </br> org.springframework.beans.factory.annotation.Qualifier|
+|@Inject|@Autowired와 동일한 기능 제공 </br> javax.annotation.Resource|
+|@Resource|@Autowired와 @Qualifier의 기능을 결합한 어노테이션 </br> javax.inject.Inject|
+
+#### @Autowired
+☛ 생성자나 메서드, 멤버변수 위에 모두 사용 가능 (대부분 멤버변수 위에 선언)  
+☛ 스프링 컨테이너는 해당 멤버 변수의 타입을 체크하고, 그 타입의 객체가 메모리에 존재하는지 확인 후 그 객체를 변수에 주입  
+☛ 만약 어노테이션이 붙지 않았다면 **NoSuchBeanDefinitionException** 발생  
+
+#### @Qualifier
+❗️ 의존성 주입 대상이 되는 같은 타입의 객체가 두 개 이상일 때 문제 발생  
+
+<img src="https://user-images.githubusercontent.com/56003992/151109853-aecfb66e-8baa-49f7-af7e-b13a7dcf92f0.jpeg" width=400 height=210>
+  
+☛ 이런 문제를 해결하기 위해 Qualifier 사용 (객체의 이름을 이용하여 의존성 주입)  
+```java
+// 두 스피커 중 AppleSpeaker 지정
+@Autowired
+@Qualifier("apple")
+private Speaker speaker
+```
+
+#### @Resource
+☛ name 속성을 사용하여 스프링 컨테이너가 해당 이름으로 생성된 객체 검색 및 의존성 주입 처리  
+☛ **@Inject** 어노테이션 또한 이름을 기반으로 의존성 주입 처리
+```java
+@Resource(name="apple")
+private Speaker speaker
+```
+  
+### 5.3 추가 어노테이션
+|Annotation|Which|Mean|
+|----------|-----|----|
+|@Service|XXXServiceImpl|비즈니스 로직을 처리하는 Service 클래스|
+|@Repository|XXXDAO|DB 연동을 처리하는 DAO 클래스|
+|@Controller|XXXController|User Request를 제어하는 Controller 클래스|
   
 * * *
   
