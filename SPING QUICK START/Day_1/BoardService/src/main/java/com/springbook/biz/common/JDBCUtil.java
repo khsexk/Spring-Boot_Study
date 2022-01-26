@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 public class JDBCUtil {
 	public static Connection getConnection() {
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection("jdbc:mysql://localhost/~/SQS", "spring", "Springbook1!");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			return DriverManager.getConnection("jdbc:mysql://localhost/SQS", "spring", "Springbook1!");
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
