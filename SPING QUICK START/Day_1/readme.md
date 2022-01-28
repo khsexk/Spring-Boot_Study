@@ -292,12 +292,16 @@ private Speaker speaker
   
 ### 6.1 BoardService 컴포넌트 구조
 <img src="https://user-images.githubusercontent.com/56003992/151112968-84e6e6f5-a8b0-449e-b79a-1a498913387f.jpeg" width=512 height=220>
-  
-
+    
+➣ [실습 예제](https://github.com/khsexk/Spring-Boot_Study/tree/main/SPING%20QUICK%20START/Day_1/BoardService)  
+: H2 DB가 아닌 MySQL을 사용하여 구현 (DAO 파트가 책의 예제와 다름)
   
 * * *
   
 # Class 07. 비즈니스 컴포넌트 실습 2
-
   
+❖ 실습 과정: 어노테이션이 아닌 Setter 인젝션으로 의존성 주입 처리 후 어노테이션을 변경
+  
+**UserService 컴포넌트 구조**  
+<img src="https://user-images.githubusercontent.com/56003992/151377246-b132cf65-35b2-4f07-90d3-49f119df2724.jpeg" width=400 height=170>
 * * *
