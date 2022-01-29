@@ -303,5 +303,10 @@ private Speaker speaker
 ❖ 실습 과정: 어노테이션이 아닌 Setter 인젝션으로 의존성 주입 처리 후 어노테이션을 변경
   
 **UserService 컴포넌트 구조**  
-<img src="https://user-images.githubusercontent.com/56003992/151377246-b132cf65-35b2-4f07-90d3-49f119df2724.jpeg" width=400 height=170>
+<img src="https://user-images.githubusercontent.com/56003992/151377246-b132cf65-35b2-4f07-90d3-49f119df2724.jpeg" width=400 height=170>. 
+  
+  
+  
+
+
 * * *
