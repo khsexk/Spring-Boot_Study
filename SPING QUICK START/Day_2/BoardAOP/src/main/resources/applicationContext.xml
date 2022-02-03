@@ -10,7 +10,34 @@
 
 	<context:component-scan base-package="com.springbook.biz"></context:component-scan>
 
+	<bean id="before" class="com.springbook.biz.common.BeforeAdvice" />
+	<bean id="afterReturning" class="com.springbook.biz.common.AfterReturningAdvice" />
+	<bean id="afterThrowing" class="com.springbook.biz.common.AfterThrowingAdvice" />
 	<bean id="around" class="com.springbook.biz.common.AroundAdvice" />
+	
+	<aop:config>
+		<aop:pointcut expression="execution(* com.springbook.biz..*Impl.*(..))" id="allPointcut"/>
+		
+		<aop:aspect ref="before">
+			<aop:before pointcut-ref="allPointcut" method="beforeLog"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<aop:config>
+		<aop:pointcut id="getPointcut" expression="execution(* com.springbook.biz..*Impl.get*(..))" />
+		
+		<aop:aspect ref="afterReturning">
+			<aop:after-returning pointcut-ref="getPointcut" method="afterLog" returning="returnObj" />
+		</aop:aspect>
+	</aop:config>
+	
+	<aop:config>
+		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))" />
+		
+		<aop:aspect ref="afterThrowing">
+			<aop:after-throwing pointcut-ref="allPointcut" method="exceptionLog" throwing="exceptObj" />
+		</aop:aspect>
+	</aop:config>
 	
 	<aop:config>
 		<aop:pointcut id="allPointcut" expression="execution(* com.springbook.biz..*Impl.*(..))" />
