@@ -136,14 +136,72 @@
 * * *
 
 # Class 03. 어드바이스 동작 시점
-
-### 3.1 Before 어드바이스
   
+✎ Advise는 각 JoinPoint에 삽입돼 동작할 횡단 관심에 해당하는 공통 기능  
+✎ <aop:aspect> 엘리먼트 하위에 동작시점 지정  
 
-  
+#### 동작시점
+|동작 시점|설명|
+|-------|---|
+|Before|비즈니스 메서드 실행 전 동작|
+|After|- After Returning: 비즈니스 메서드가 성공적으로 리턴되면 동작 </br> - After Throwing: 비즈니스 메서드 실행 중 예외가 발생하면 동작 </br> - After: 비즈니스 메서드가 실행된 후 무조건 실행|
+|Around|메서드 호출 자체를 가로채 비즈니스 메서드 실행 전후에 처리할 로직을 삽입할 수 있음|
+
 * * *
 
 # Class 04. JoinPoint와 바인드 변수
-
+  
+⭐️ 횡단 관심에 해당하는 Advise 메서드를 의미 있게 구현하려면 클라이언트가 호출한 비즈니스 메서드의 정보가 필요  
+➡️ 스프링에서는 이런 다양한 정보들을 이용할 수 있도록 JoinPoint 인터페이스 제공  
+  
 ### 4.1 JoinPoint 메서드
   
+|메서드|설명|
+|----|---|
+|Signature getSignature()|클라이언트가 호출한 메서드의 시그니처 정보가 저장된 Signature(리턴 타입, 이름, 매개변수) 객체 반환|
+|Object getTarget()|클라이언트가 호출한 비즈니스 메서드를 포함하는 비즈니스 객체 반환|
+|Object[] getArgs()|클라이언트가 메서드를 호출할 때 넘겨준 인자 목록을 Object 배열로 반환|
+  
+**→ [이전에 실습했던 예제](https://github.com/khsexk/Spring-Boot_Study/blob/main/SPING%20QUICK%20START/Day_2/BoardAOP/src/main/java/com/springbook/biz/common/AroundAdvice.java)에서 사용했던 ProceedingJoinPoint 인터페이스는 JoinPoint를 상속했고, 따라서 JoinPoint가 가진 모든 메서드를 지원하며, proceed() 메서드를 추가했다고 보면 됨**  
+**→ Around Advise를 제외한 다른 Advise 또한 JoinPoint를 사용해야 하고, proceed() 메서드가 필요한 Around Advise만 ProceedingJoinPoint를 사용함**  
+  
+#### ❖ Signiture 메서드
+|메서드|설명|
+|----|---|
+|String getName()|클라이언트가 호출한 메서드 이름 반환|
+|String toLongString()|클라이언트가 호출한 메서드의 리턴타입, 이름, 매개변수를 패키지 경로까지 포함하여 반환|
+|String toShortString()|클라이언트가 호출한 메서드 시그니처를 축약한 문자열로 반환|
+  
+#### ❖ JoinPoint 객체 사용하기
+- JoinPoint를 어드바이스 메서드 매개변수로 선언만 하면 됨
+- 클라이언트가 비즈니스 메서드를 호출할 때 스프링 컨테이너 JoinPoint 객체 생성
+- 메서드 호출과 관련된 모든 정보를 JoinPoint 객체에 담아 Advise 메서드를 호출할 때 인자로 넘겨줌  
+  
+### 4.2 Before 어드바이스
+  
+: 비즈니스 메서드가 실행되기 전에 동작할 로직 구현  
+☛ 호출된 메서드 시그니처만 알 수 있으면 다양한 사전 처리 로직 구현 가능  
+→ 예제: [BeforeAdvice.java](https://github.com/khsexk/Spring-Boot_Study/blob/main/SPING%20QUICK%20START/Day_2/BoardAOP/src/main/java/com/springbook/biz/common/BeforeAdvice.java)
+  
+### 4.3 After Returning 어드바이스
+  
+: 비즈니스 메서드가 수행되고 나서, 결과 데이터를 리턴할 때 동작하는 어드바이스  
+☛ 어떤 메서드가 어떤 값을 리턴했는지를 알아야 사후 처리 기능을 다양하게 구현 가능  
+→ 예제: [AfterReturning.java](https://github.com/khsexk/Spring-Boot_Study/blob/main/SPING%20QUICK%20START/Day_2/BoardAOP/src/main/java/com/springbook/biz/common/AfterReturningAdvice.java)  
+- 클라이언트가 호출한 비즈니스 메서드 정보를 알아내기 위해 JoinPoint 객체를 첫번째 매개변수, Object 타입의 변수(바인드 변수)를 두번째 매개변수로 선언  
+- 바인드 변수는 비즈니스 메서드가 리턴한 결괏값을 바인딩할 목적으로 사용되며 어떤 값이 리턴될지 모르기 때문에 Object 타입으로 선언
+- 바인드 변수는 스프링 설정 파일에서 <aop:after-returning> 엘리먼트의 returning 속성을 사용하여 매핑  
+  
+### 4.4 After Throwing 어드바이스
+  
+: 비즈니스 메서드가 수행되다가 예외가 발생할 때 동작하는 어드바이스  
+☛ 어떤 메서드에서 어떤 예외가 발생했는지 알아야 함  
+→ 예제: [AfterThrowing.java](https://github.com/khsexk/Spring-Boot_Study/blob/main/SPING%20QUICK%20START/Day_2/BoardAOP/src/main/java/com/springbook/biz/common/AfterThrowingAdvice.java)  
+- 바인드 변수는 스프링 설정 파일에서 <aop:after-throwing> 엘리먼트의 throwing 속성을 사용하여 매핑  
+  
+### 4.5 Around 어드바이스
+  
+: proceed() 메서드를 사용하기 위해 ProceedingJoinPoint 객체 사용  
+→ 예제: [AroundAdvice.java](https://github.com/khsexk/Spring-Boot_Study/blob/main/SPING%20QUICK%20START/Day_2/BoardAOP/src/main/java/com/springbook/biz/common/AroundAdvice.java)
+  
+* * *
