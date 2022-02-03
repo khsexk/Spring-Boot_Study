@@ -71,15 +71,15 @@
   
 ☛ AOP 관련 설정은 XML 방식과 annotation 방식이 있지만, XML부터 알아보자.  
   
-#### ❖ <aop:config> 엘리먼트
+#### ❖ &lt;aop:config&gt; 엘리먼트
 : AOP 설정에서 루트 엘리먼트  
 
-#### ❖ <aop:pointcut> 엘리먼트
+#### ❖ &lt;aop:pointcut&gt; 엘리먼트
 : Pointcut 지정을 위해 사용
 : <aop:config>나 <aop:aspect>의 자식 엘리먼트로 사용  
 : but <aop:aspect> 하위에 설정된 Pointcut은 해당 <aop:aspect>에서만 사용 가능  
 
-#### ❖ <aop:aspect> 엘리먼트 
+#### ❖ &lt;aop:aspect&gt; 엘리먼트 
 : 핵심 관심에 해당하는 Pointcut 메서드와 횡단 관심에 해당하는 Advise 메서드를 결합하기 위해 사용  
 : aspect를 어떻게 설정하느냐에 따라 위빙 결과가 달라짐  
 ```XML
@@ -88,7 +88,7 @@
 </aop:aspect>
 ```  
 
-#### ❖ <aop:advisor> 엘리먼트
+#### ❖ &lt;aop:advisor&gt; 엘리먼트
 : aspect와 같은 기능 수행  
 : but, 트랜잭션 설정과 같은 몇몇 특수한 경우는 무조건 Advisor를 사용해야 함  
 → **Advise 객체의 id를 모르거나 메서드 이름을 확인할 수 없을 때는 aspect를 사용할 수 없다❗️**  
@@ -204,4 +204,82 @@
 : proceed() 메서드를 사용하기 위해 ProceedingJoinPoint 객체 사용  
 → 예제: [AroundAdvice.java](https://github.com/khsexk/Spring-Boot_Study/blob/main/SPING%20QUICK%20START/Day_2/BoardAOP/src/main/java/com/springbook/biz/common/AroundAdvice.java)
   
+* * *
+  
+# Class 05. 어노테이션 기반 AOP
+
+☛  XML과 어노테이션 설정을 적절히 혼합하여 사용하면 XML 설정을 최소화하면서 객체들을 효율적으로 관리할 수 있음  
+  
+### 5.1 어노테이션 기반 AOP 설정
+  
+✎ AOP 어노테이션 설정을 위해스프링 설정 파일에 &lt;aop:aspectj-autoproxy&gt; 엘리먼트 선언  
+✎ AOP 관련 어노테이션들은 Advice 클래스에 설정하고, 스프링 컨테이너가 이를 처리하게 하려면 Advice 객체가 생성돼 있어야 함  
+```
+<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+```  
+- Annotation 설정
+  - @Service
+  - public class LogAdvice { } 
+- XML 설정
+  - &lt;bean id="log" class="com.springbook.biz.common.LogAdvice"&gt;&lt;/bean&gt;  
+
+#### Pointcut 설정
+: @Pointcut → 하나의 Advice 클래스 안에 여러 개의 Pointcut 선언 가능  
+: @Pointcut이 붙으 참조 메서드 이름을 이용하여 특정 Pointcut 지정 가능  
+
+#### Advice 설정
+|어노테이션|설명|
+|-------|---|
+|@Before|비즈니스 메서드 실행 전에 동작|
+|@AfterReturning|비즈니스 메서드가 성공적으로 리턴되면 동작|
+|@AfterThrowing|비즈니스 메서드 실행 중 예외 발생 시 동작|
+|@After|비즈니스 메서드 실행 후 무조건 실행|
+|@Around|호출 자체를 가로체 비즈니스 메서드 실행 전후에 처리할 로직 삽입 가능|
+  
+#### aspect 설정
+
+: 클래스 위에 ***@Aspect***를 설정해주면, 스프링 컨테이너는 그 객체를 Aspect 객체로 인식  
+: Advice 메서드와 Pointcut 메서드를 결합  
+
+### 5.2 어드바이스 동작 시점
+
+#### 어드바이스 별 어노테이션 선언
+|Advice|Annotation 설정|
+|-------|---|
+|Before|@Before("Pointcut 메서드")|
+|After Returning|@AfterReturning(pointcut="Pointcut 메서드", returning="바인드 변수")|
+|After Throwing|@AfterThrowing(pointcut="Pointcut 메서드", throwing="바인드 변수")|
+|After|@After("Pointcut 메서드")|
+|Around|@Around("Pointcut 메서드")|
+  
+#### 외부 Pointcut 참조하기
+☛ XML 설정과 다르게 annotation 설정을 하면서 비슷하거나 같은 Pointcut이 반복 선언되는 문제 발생!  
+: Pointcut을 외부에 독립적인 클래스로 설정해주자.  
+: 타 클래스에서 참조할 때는 ***"클래스 명.Pointcut메서드"***  
+```java
+@Aspect
+public class PointcutCommon {
+	@Pointcut("execution(* com.springbook.biz..*Impl.*(..))")
+	public void allPointcut() {}
+	
+	@Pointcut("execution(* com.springbook.biz..*Impl.get*(..))")
+	public void getPointcut() {}
+}
+```
+
+* * *
+
+# Class 06.
+
+
+
+
+
+* * *
+
+# Class 07.
+
+
+
+
 * * *
