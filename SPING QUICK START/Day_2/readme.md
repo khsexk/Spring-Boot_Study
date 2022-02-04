@@ -269,11 +269,40 @@ public class PointcutCommon {
 
 * * *
 
-# Class 06.
+# Class 06. 스프링 JDBC
+  
+❖ DBCP: DataBase Connection Pool 의 약자로 DB와 커넥션을 맺고 있는 객체를 관리하는 역할  
+  
+### 6.1 스프링 JDBC 개념
+: JDBC는 가장 오랫동안 Java 개발자들이 사용한 DB 연동 기술이다. JDBC를 이용해 DB 연동 프로그램을 개발하면 DB에 비종속적인 연동 로직을 구현할 수 있다. 하지만 JDBC를 이용하면 적어야 할 코드가 너무 많아진다. JDBCUtil 클래스를 통해 연동 부분을 따로 분리할 수 있지만, 이 또한 불편한 점이 많다. 스프링은 JDBC 기반의 DB 연동 프로그램으 쉽게 개발할 수 있도록 JdbcTemplate 클래스를 지원한다.  
 
+### 6.2 JdbcTemplate 클래스
+☛ GoF 디자인 패턴 중 템플릿 메서드 패턴이 적용된 클래스  
+✎ 템플릿 메서드 패턴은 복잡하고 반복되는 알고리즘을 캡슐화해서 재사용하는 패턴으로 정의할 수 있음  
 
+#### 반복되는 DB 연동 로직은 JdbcTemplate 클래스의 템플릿 메서드가 제공하고, 개발자는 달라지는 SQL 구문과 설정값만 신경 쓰면 된다!
+<img src="https://user-images.githubusercontent.com/56003992/152495800-0319c1bb-7650-41aa-a69a-12657ff16503.png" width=500 height="220">  
+→ JdbcTemplate 클래스는 내부적으로 JDBC API를 이용하여 실제 DB 연동 작업 처리
 
+### 6.3 스프링 JDBC 설정
+☛ pom.xml 파일애 DBCP 관련 &lt;dependency&gt; 설정 추가  
+```xml
+<!-- Spring -->
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-jdbc</artifactId>
+	<version>5.3.15</version>
+</dependency>
+		
+<!-- DBCP -->
+<dependency>
+	<groupId>commons-dbcp</groupId>
+	<artifactId>commons-dbcp</artifactId>
+	<version>1.4</version>
+</dependency>
+```
 
+#### ❖ DataSource 설정
 
 * * *
 
